@@ -1,0 +1,29 @@
+clear; close all;
+
+x = sdpvar(1, 2, 'full');
+
+A  = [5 2; 2 10];
+B = [-15 -2; -2 -10];
+
+
+cons = [
+    % 1. Linear Matrix Inequality (LMI), which is convex:
+    x(1, 1)*A + x(1,2)*B >= 10^-6 * [1 0; 0 1], 
+
+    % 2. Linear inequality constraint, which is convex:
+    x(1,1) + x(1,2) <= 1,
+
+    % 3. (Crucial for many problems) Bounding the variables
+    % If x is a probability distribution/weight, you might need:
+    % x >= 0 
+];
+
+obj = x(1,2);
+
+
+options = sdpsettings('solver', 'mos'); 
+
+%sol = optimize(cons, obj)
+sol = optimize(cons, obj, options);
+
+x_val = value(x)

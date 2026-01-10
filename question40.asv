@@ -1,0 +1,10 @@
+x = sdpvar(2, 1);
+
+A = [5 2; 2 10];
+B = [15 -2; -2 10];
+
+lambda = 0;
+
+%% constraints
+cons = [];
+
